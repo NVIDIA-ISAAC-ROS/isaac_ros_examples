@@ -1,0 +1,19 @@
+device_type: ''
+serial_no: ''
+usb_port_id: ''
+
+enable_accel: true
+enable_color: false
+enable_depth: false
+enable_gyro: true
+enable_infra1: true
+enable_infra2: true
+gyro_fps: 200
+accel_fps: 200
+unite_imu_method: 2
+
+depth_qos: "SYSTEM_DEFAULT"
+depth_module:
+  profile: '640x360x90'
+  emitter_enabled: 0
+  emitter_on_off: false
