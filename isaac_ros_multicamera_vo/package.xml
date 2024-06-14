@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>isaac_ros_multicamera_vo</name>
-  <version>3.0.0</version>
+  <version>3.0.1</version>
   <description>Isaac ROS Launch Fragment for cuVSLAM Visual Odomtry for multicamera cases</description>
 
   <maintainer email="isaac-ros-maintainers@nvidia.com">Isaac ROS Maintainers</maintainer>
@@ -10,7 +10,11 @@
   <url type="website">https://developer.nvidia.com/isaac-ros/</url>
   <author>Alexander Efitorov</author>
 
+  <exec_depend>foxglove_bridge</exec_depend>
+  <exec_depend>isaac_ros_h264_decoder</exec_depend>
+  <exec_depend>isaac_ros_launch_utils</exec_depend>
   <exec_depend>isaac_ros_visual_slam</exec_depend>
+  <exec_depend>nova_carter_bringup</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
