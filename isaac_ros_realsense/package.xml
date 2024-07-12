@@ -10,7 +10,6 @@
   <url type="website">https://developer.nvidia.com/isaac-ros/</url>
   <author>Jaiveer Singh</author>
 
-  <exec_depend>realsense2_camera</exec_depend>
   <exec_depend>isaac_ros_depth_image_proc</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
