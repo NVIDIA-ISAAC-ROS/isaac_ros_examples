@@ -63,6 +63,20 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
     'usb_cam': IsaacROSLaunchFragmentSpec(
         'isaac_ros_usb_cam', 'IsaacROSUSBCameraLaunchFragment'),
 
+    # ZED Camera
+    'zed_mono_rect': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_zed', 'IsaacROSZedMonoRectLaunchFragment',
+        'isaac_ros_zed_mono_rect_core.launch.py'),
+    'zed_stereo_rect': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_zed', 'IsaacROSZedStereoRectLaunchFragment',
+        'isaac_ros_zed_stereo_rect_core.launch.py'),
+    'zed_mono': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_zed', 'IsaacROSZedMonoLaunchFragment',
+        'isaac_ros_zed_mono_core.launch.py'),
+    'zed_mono_rect_depth': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_zed', 'IsaacROSZedMonoRectDepthLaunchFragment',
+        'isaac_ros_zed_mono_rect_depth_core.launch.py'),
+
     ###########################
     # Preprocessing Utilities #
     ###########################
