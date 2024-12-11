@@ -30,7 +30,7 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 
 MODULE_IDS = {
-    # Nova Carter Hawk ids. For Nova DevKit Hawk use following ids: front: 3, left: 5, right: 4
+    # Nova Carter Hawk ids
     'front_stereo_camera': 5,
     'back_stereo_camera': 6,
     'left_stereo_camera': 7,
@@ -46,8 +46,8 @@ def hawk_capture(camera_name):
             namespace=f'{camera_name}',
             parameters=[{'module_id': MODULE_IDS[camera_name],
                          'camera_link_frame_name': f'{camera_name}',
-                         'left_optical_frame_name': f'{camera_name}_left_optical',
-                         'right_optical_frame_name': f'{camera_name}_right_optical'}],
+                         'left_camera_frame_name': f'{camera_name}_left',
+                         'right_camera_frame_name': f'{camera_name}_right'}],
             remappings=[
                 (f'/{camera_name}/correlated_timestamp', '/correlated_timestamp'),
             ],
@@ -67,23 +67,19 @@ def hawk_decoder(name, identifier):
     return decoder
 
 
-def hawk_processing(name, identifier, rectify=False):
+def hawk_processing(name, identifier):
     rectify_node = ComposableNode(
-            name=f'{name}_{identifier}_rectify_node',
-            package='isaac_ros_image_proc',
-            plugin='nvidia::isaac_ros::image_proc::RectifyNode',
-            namespace=f'{name}_stereo_camera/{identifier}',
-            parameters=[{
-                'output_width': 1920,
-                'output_height': 1200,
-                'type_negotiation_duration_s': 1,
-            }],
-        )
-
-    if rectify:
-        return [rectify_node]
-
-    return []
+        name=f'{name}_{identifier}_rectify_node',
+        package='isaac_ros_image_proc',
+        plugin='nvidia::isaac_ros::image_proc::RectifyNode',
+        namespace=f'{name}_stereo_camera/{identifier}',
+        parameters=[{
+            'output_width': 1920,
+            'output_height': 1200,
+            'type_negotiation_duration_s': 1,
+        }],
+    )
+    return rectify_node
 
 
 def generate_launch_description():
@@ -118,7 +114,7 @@ def generate_launch_description():
             'use_sim_time': False,
             'override_publishing_stamp': False,
             'enable_ground_constraint_in_odometry': True,
-            'enable_localization_n_mapping': False,
+            'enable_localization_n_mapping': True,
 
             # frame params
             'map_frame': 'map',
@@ -186,19 +182,9 @@ def generate_launch_description():
     visual_slam_container = ComposableNodeContainer(
         name='visual_slam_launch_container',
         package='rclcpp_components',
-        executable='component_container',
+        executable='component_container_mt',
         namespace='',
-        composable_node_descriptions=(
-            hawk_processing('front', 'left') +
-            hawk_processing('front', 'right') +
-            hawk_processing('back', 'left') +
-            hawk_processing('back', 'right') +
-            hawk_processing('left', 'left') +
-            hawk_processing('left', 'right') +
-            hawk_processing('right', 'left') +
-            hawk_processing('right', 'right') +
-            [visual_slam_node]
-        ),
+        composable_node_descriptions=([visual_slam_node]),
         output='screen',
         condition=LaunchConfigurationEquals('use_rectify', 'False')
     )
@@ -206,19 +192,19 @@ def generate_launch_description():
     visual_slam_rect_container = ComposableNodeContainer(
         name='visual_slam_launch_container',
         package='rclcpp_components',
-        executable='component_container',
+        executable='component_container_mt',
         namespace='',
-        composable_node_descriptions=(
-            hawk_processing('front', 'left', True) +
-            hawk_processing('front', 'right', True) +
-            hawk_processing('back', 'left', True) +
-            hawk_processing('back', 'right', True) +
-            hawk_processing('left', 'left', True) +
-            hawk_processing('left', 'right', True) +
-            hawk_processing('right', 'left', True) +
-            hawk_processing('right', 'right', True) +
-            [visual_slam_node],
-        ),
+        composable_node_descriptions=([
+            hawk_processing('front', 'left'),
+            hawk_processing('front', 'right'),
+            hawk_processing('back', 'left'),
+            hawk_processing('back', 'right'),
+            hawk_processing('left', 'left'),
+            hawk_processing('left', 'right'),
+            hawk_processing('right', 'left'),
+            hawk_processing('right', 'right'),
+            visual_slam_node
+        ]),
         output='screen',
         condition=LaunchConfigurationEquals('use_rectify', 'True')
     )

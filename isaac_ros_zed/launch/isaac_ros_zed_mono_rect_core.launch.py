@@ -44,6 +44,22 @@ class IsaacROSZedMonoRectLaunchFragment(IsaacROSLaunchFragment):
 
     @staticmethod
     def get_composable_nodes(interface_specs: Dict[str, Any]) -> Dict[str, ComposableNode]:
+
+        camera_model = interface_specs['camera_model']
+
+        # ZED Configurations to be loaded by ZED Node
+        config_common = os.path.join(
+            get_package_share_directory('isaac_ros_zed'),
+            'config',
+            'zed_mono.yaml'
+        )
+
+        config_camera = os.path.join(
+            get_package_share_directory('zed_wrapper'),
+            'config',
+            camera_model + '.yaml'
+        )
+
         return {
             'image_format_converter_node_left': ComposableNode(
                 package='isaac_ros_image_proc',
@@ -57,6 +73,19 @@ class IsaacROSZedMonoRectLaunchFragment(IsaacROSLaunchFragment):
                 remappings=[
                     ('image_raw', 'zed_node/left/image_rect_color'),
                     ('image', 'image_rect')]
+            ),
+            'zed_wrapper_component': ComposableNode(
+                package='zed_components',
+                plugin='stereolabs::ZedCamera',
+                name='zed_node',
+                parameters=[
+                    config_common,  # Common parameters
+                    config_camera,  # Camera related parameters
+                ],
+                remappings=[
+                    ('zed_node/left/camera_info', '/camera_info_rect'),
+                ],
+                extra_arguments=[{'use_intra_process_comms': True}]
             )
         }
 
@@ -69,19 +98,6 @@ class IsaacROSZedMonoRectLaunchFragment(IsaacROSLaunchFragment):
         xacro_path = os.path.join(
             get_package_share_directory('zed_wrapper'),
             'urdf', 'zed_descr.urdf.xacro'
-        )
-
-        # ZED Configurations to be loaded by ZED Node
-        config_common = os.path.join(
-            get_package_share_directory('isaac_ros_zed'),
-            'config',
-            'zed_mono.yaml'
-        )
-
-        config_camera = os.path.join(
-            get_package_share_directory('zed_wrapper'),
-            'config',
-            camera_model + '.yaml'
         )
 
         return {
@@ -99,20 +115,6 @@ class IsaacROSZedMonoRectLaunchFragment(IsaacROSLaunchFragment):
                             'camera_model:=', camera_model
                         ])
                 }]
-            ),
-            # ZED node using manual composition
-            'zed_node': Node(
-                package='zed_wrapper',
-                executable='zed_wrapper',
-                output='screen',
-                parameters=[
-                    config_common,  # Common parameters
-                    config_camera,  # Camera related parameters
-                ],
-                arguments=[
-                    '--ros-args',
-                    '--remap', 'zed_node/left/camera_info:=/camera_info_rect'
-                ]
             )
         }
 
