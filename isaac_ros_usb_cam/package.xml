@@ -2,13 +2,14 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>isaac_ros_usb_cam</name>
-  <version>3.1.0</version>
+  <version>3.2.0</version>
   <description>Isaac ROS Launch Fragment for USB cameras</description>
 
   <maintainer email="isaac-ros-maintainers@nvidia.com">Isaac ROS Maintainers</maintainer>
   <license>Apache-2.0</license>
   <url type="website">https://developer.nvidia.com/isaac-ros/</url>
   <author>Jaiveer Singh</author>
+  <build_depend>isaac_ros_common</build_depend>
 
   <exec_depend>usb_cam</exec_depend>
 

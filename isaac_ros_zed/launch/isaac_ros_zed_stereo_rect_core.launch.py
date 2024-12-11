@@ -21,7 +21,8 @@ from typing import Any, Dict
 from ament_index_python import get_package_share_directory
 from isaac_ros_examples import IsaacROSLaunchFragment
 import launch
-from launch.substitutions import Command
+from launch.actions import DeclareLaunchArgument
+from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import ComposableNodeContainer, Node
 from launch_ros.descriptions import ComposableNode
 
@@ -46,6 +47,24 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
     def get_composable_nodes(interface_specs: Dict[str, Any]) -> Dict[str, ComposableNode]:
         # The zed camera mode name. zed, zed2, zed2i, zedm, zedx or zedxm
         camera_model = interface_specs['camera_model']
+        pub_frame_rate = LaunchConfiguration('pub_frame_rate')
+
+        # ZED Configurations to be loaded by ZED Node
+        config_common = os.path.join(
+            get_package_share_directory('isaac_ros_zed'),
+            'config',
+            'zed_mono.yaml'
+        )
+
+        config_camera = os.path.join(
+            get_package_share_directory('zed_wrapper'),
+            'config',
+            camera_model + '.yaml'
+        )
+        base_parameters = [config_common, config_camera]
+        override_parameters = {'general.pub_frame_rate': pub_frame_rate}
+        parameters = base_parameters + [override_parameters]
+
         return {
             'image_format_converter_node_left': ComposableNode(
                 package='isaac_ros_image_proc',
@@ -86,8 +105,19 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
                     'rotation.x': -0.5,
                     'rotation.y': 0.5,
                     'rotation.z': -0.5,
-                    'rotation.w': 0.5
-                }])
+                    'rotation.w': 0.5}]
+            ),
+            'zed_wrapper_component': ComposableNode(
+                package='zed_components',
+                plugin='stereolabs::ZedCamera',
+                name='zed_node',
+                parameters=parameters,
+                remappings=[
+                    ('zed_node/left/camera_info', '/left/camera_info_rect'),
+                    ('zed_node/right/camera_info', '/right/camera_info_rect'),
+                ],
+                extra_arguments=[{'use_intra_process_comms': True}]
+            )
         }
 
     @staticmethod
@@ -101,20 +131,12 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
             'urdf', 'zed_descr.urdf.xacro'
         )
 
-        # ZED Configurations to be loaded by ZED Node
-        config_common = os.path.join(
-            get_package_share_directory('isaac_ros_zed'),
-            'config',
-            'zed.yaml'
-        )
-
-        config_camera = os.path.join(
-            get_package_share_directory('zed_wrapper'),
-            'config',
-            camera_model + '.yaml'
-        )
-
         return {
+            'pub_frame_rate': DeclareLaunchArgument(
+                'pub_frame_rate',  # Name of the argument
+                default_value='15.0',  # Default value as a string
+                description='Frame rate for publishing ZED camera data'
+            ),
             # Robot State Publisher node
             'rsp_node': Node(
                 package='robot_state_publisher',
@@ -130,21 +152,6 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
                         ])
                 }]
             ),
-            # ZED node using manual composition
-            'zed_node': Node(
-                package='zed_wrapper',
-                executable='zed_wrapper',
-                output='screen',
-                parameters=[
-                    config_common,  # Common parameters
-                    config_camera,  # Camera related parameters
-                ],
-                arguments=[
-                    '--ros-args',
-                    '--remap', 'zed_node/left/camera_info:=/left/camera_info_rect',
-                    '--remap', 'zed_node/right/camera_info:=/right/camera_info_rect',
-                ]
-            )
         }
 
 
