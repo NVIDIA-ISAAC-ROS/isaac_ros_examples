@@ -95,6 +95,10 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
         'isaac_ros_image_resize_rectify_stereo_core.launch.py'),
 
     # Isaac ROS Depth Proc
+    # Align depth to color
+    'align_depth_to_color': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_depth_image_proc', 'IsaacROSAlignDepthToColorLaunchFragment',
+        'isaac_ros_depth_image_proc_align_depth_to_color_core.launch.py'),
     # Convert depth to metric
     'convert_metric': IsaacROSLaunchFragmentSpec(
         'isaac_ros_depth_image_proc', 'IsaacROSConvertMetricLaunchFragment',
@@ -136,17 +140,13 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
     'stereo_h264_encoder': IsaacROSLaunchFragmentSpec(
         'isaac_ros_h264_encoder', 'IsaacROSStereoH264EncoderLaunchFragment'),
 
-    # Isaac ROS Depth Segmentation
-    'bi3d': IsaacROSLaunchFragmentSpec(
-        'isaac_ros_bi3d', 'IsaacROSBi3DLaunchFragment'),
 
     # Isaac ROS DNN Stereo Depth
     'ess_disparity': IsaacROSLaunchFragmentSpec(
         'isaac_ros_ess', 'IsaacROSEssLaunchFragment'),
+    'foundationstereo': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_foundationstereo', 'IsaacROSFoundationStereoLaunchFragment'),
 
-    # Isaac ROS Freespace Segmentation
-    'bi3d_freespace': IsaacROSLaunchFragmentSpec(
-        'isaac_ros_bi3d_freespace', 'IsaacROSBi3DFreespaceLaunchFragment'),
 
     # Isaac ROS Image Pipeline
     'resize': IsaacROSLaunchFragmentSpec(
@@ -167,10 +167,14 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
         'isaac_ros_segformer', 'IsaacROSSegformerLaunchFragment'),
     'segment_anything': IsaacROSLaunchFragmentSpec(
         'isaac_ros_segment_anything', 'IsaacROSSegmentAnythingLaunchFragment'),
+    'segment_anything2': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_segment_anything2', 'IsaacROSSegmentAnything2LaunchFragment'),
     'unet': IsaacROSLaunchFragmentSpec(
         'isaac_ros_unet', 'IsaacROSUNetLaunchFragment'),
 
     # Isaac ROS Object Detection
+    'grounding_dino': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_grounding_dino', 'IsaacROSGroundingDinoLaunchFragment'),
     'rtdetr': IsaacROSLaunchFragmentSpec(
         'isaac_ros_rtdetr', 'IsaacROSRtDetrLaunchFragment'),
     'detectnet': IsaacROSLaunchFragmentSpec(

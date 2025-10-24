@@ -1,9 +1,12 @@
 rgb_camera:
-  profile: '640x480x15'
+  color_profile: '640x480x15'
+  profile: '640x480x15' # For backwards compatibility
 color_qos: "SYSTEM_DEFAULT"
 
 depth_module:
-  profile: '640x480x15'
+  depth_profile: '640x480x15'
+  infra_profile: '640x480x15'
+  profile: '640x480x15' # For backwards compatibility
   emitter_enabled: 0
   emitter_on_off: false
 depth_qos: "SYSTEM_DEFAULT"
@@ -12,4 +15,5 @@ depth_info_qos: "SYSTEM_DEFAULT"
 enable_infra1: false
 enable_infra2: false
 
-align_depth.enable: true
+align_depth:
+  enable: true

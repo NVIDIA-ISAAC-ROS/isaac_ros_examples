@@ -49,20 +49,22 @@ class IsaacROSRealSenseStereoRectImuLaunchFragment(IsaacROSLaunchFragment):
             get_package_share_directory('isaac_ros_realsense'),
             'config', 'realsense_stereo_imu.yaml'
         )
-
+        camera_name = 'camera'
         return {
             'camera_node': ComposableNode(
                 package='realsense2_camera',
                 plugin='realsense2_camera::RealSenseNodeFactory',
-                name='realsense2_camera',
+                name=camera_name,
                 namespace='',
                 parameters=[
                     realsense_config_file_path
                 ],
-                remappings=[('infra1/image_rect_raw', 'infra1/image_rect_raw_mono'),
-                            ('infra1/camera_info', 'left/camera_info_rect'),
-                            ('infra2/image_rect_raw', 'infra2/image_rect_raw_mono'),
-                            ('infra2/camera_info', 'right/camera_info_rect')]
+                remappings=[(f'/{camera_name}/infra1/image_rect_raw',
+                             'infra1/image_rect_raw_mono'),
+                            (f'/{camera_name}/infra1/camera_info', 'left/camera_info_rect'),
+                            (f'/{camera_name}/infra2/image_rect_raw',
+                             'infra2/image_rect_raw_mono'),
+                            (f'/{camera_name}/infra2/camera_info', 'right/camera_info_rect')]
             ),
             'image_format_converter_left_node': ComposableNode(
                 package='isaac_ros_image_proc',
