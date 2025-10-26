@@ -10,5 +10,6 @@ enable_infra1: false
 enable_infra2: false
 
 rgb_camera:
-  profile: '640x480x15'
+  color_profile: '640x480x15'
+  profile: '640x480x15' # For backwards compatibility
 color_qos: "SYSTEM_DEFAULT"

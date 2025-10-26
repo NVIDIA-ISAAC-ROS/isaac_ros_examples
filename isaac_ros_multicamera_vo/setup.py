@@ -44,7 +44,11 @@ setup(
     maintainer_email='isaac-ros-maintainers@nvidia.com',
     description='Isaac ROS Launch Fragment for cuVSLAM Visual Odomtry for multicamera cases',
     license='NVIDIA Isaac ROS Software License',
-    tests_require=['pytest'],
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
         ],

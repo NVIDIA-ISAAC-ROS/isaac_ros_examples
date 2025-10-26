@@ -14,6 +14,8 @@ unite_imu_method: 2
 
 depth_qos: "SYSTEM_DEFAULT"
 depth_module:
-  profile: '640x360x90'
+  depth_profile: '640x360x90'
+  infra_profile: '640x360x90'
+  profile: '640x360x90' # For backwards compatibility
   emitter_enabled: 0
   emitter_on_off: false

@@ -46,18 +46,18 @@ class IsaacROSRealSenseMonoLaunchFragment(IsaacROSLaunchFragment):
             get_package_share_directory('isaac_ros_realsense'),
             'config', 'realsense_mono.yaml'
         )
-
+        camera_name = 'camera'
         return {
             'camera_node': ComposableNode(
                 package='realsense2_camera',
                 plugin='realsense2_camera::RealSenseNodeFactory',
-                name='realsense2_camera',
+                name=camera_name,
                 namespace='',
                 parameters=[
                     realsense_config_file_path
                 ],
-                remappings=[('color/image_raw', 'image_raw'),
-                            ('color/camera_info', 'camera_info')]
+                remappings=[(f'/{camera_name}/color/image_raw', 'image_raw'),
+                            (f'/{camera_name}/color/camera_info', 'camera_info')]
             )
         }
 

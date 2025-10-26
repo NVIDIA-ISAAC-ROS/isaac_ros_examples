@@ -49,18 +49,18 @@ class IsaacROSRealSenseMonoRectDepthLaunchFragment(IsaacROSLaunchFragment):
             get_package_share_directory('isaac_ros_realsense'),
             'config', 'realsense_mono_depth.yaml'
         )
-
+        camera_name = 'camera'
         return {
             'camera_node': ComposableNode(
                 package='realsense2_camera',
                 plugin='realsense2_camera::RealSenseNodeFactory',
-                name='realsense2_camera',
+                name=camera_name,
                 namespace='',
                 parameters=[
                     realsense_config_file_path
                 ],
-                remappings=[('color/image_raw', 'image_rect'),
-                            ('color/camera_info', 'camera_info_rect')]
+                remappings=[(f'/{camera_name}/color/image_raw', 'image_rect'),
+                            (f'/{camera_name}/color/camera_info', 'camera_info_rect')]
             ),
             # Realsense depth is in uint16 and millimeters. Convert to float32 and meters
             'convert_metric_node': ComposableNode(
@@ -68,7 +68,7 @@ class IsaacROSRealSenseMonoRectDepthLaunchFragment(IsaacROSLaunchFragment):
                 plugin='nvidia::isaac_ros::depth_image_proc::ConvertMetricNode',
                 name='convert_metric',
                 remappings=[
-                    ('image_raw', 'aligned_depth_to_color/image_raw'),
+                    ('image_raw', f'/{camera_name}/aligned_depth_to_color/image_raw'),
                     ('image', 'depth')
                 ]
             ),

@@ -38,7 +38,11 @@ setup(
     maintainer_email='isaac-ros-maintainers@nvidia.com',
     description='Utilities for launching example graphs of Isaac ROS packages',
     license='NVIDIA Isaac ROS Software License',
-    tests_require=['pytest'],
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
         ],

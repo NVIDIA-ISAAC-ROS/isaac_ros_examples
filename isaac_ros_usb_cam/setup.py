@@ -37,7 +37,11 @@ setup(
     maintainer='Isaac ROS Maintainers',
     maintainer_email='isaac-ros-maintainers@nvidia.com',
     description='Isaac ROS Launch Fragment for USB cameras',
-    tests_require=['pytest'],
+    extras_require={
+        'test': [
+            'pytest',
+        ],
+    },
     entry_points={
         'console_scripts': [
         ],
