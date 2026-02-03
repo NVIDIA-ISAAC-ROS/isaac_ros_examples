@@ -2,7 +2,7 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>isaac_ros_realsense</name>
-  <version>4.0.0</version>
+  <version>4.1.0</version>
   <description>Isaac ROS Launch Fragment for Intel RealSense cameras</description>
 
   <maintainer email="isaac-ros-maintainers@nvidia.com">Isaac ROS Maintainers</maintainer>
@@ -12,6 +12,7 @@
   <build_depend>isaac_ros_common</build_depend>
 
   <exec_depend>isaac_ros_depth_image_proc</exec_depend>
+  <exec_depend>isaac_ros_image_proc</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
