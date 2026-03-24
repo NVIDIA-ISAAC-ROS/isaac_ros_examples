@@ -76,7 +76,7 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
                     'image_height': interface_specs['camera_resolution']['height'],
                 }],
                 remappings=[
-                    ('image_raw', 'zed_node/left/image_rect_color'),
+                    ('image_raw', 'zed_node/left/color/rect/image'),
                     ('image', 'left/image_rect')]
             ),
             'image_format_converter_node_right': ComposableNode(
@@ -89,7 +89,7 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
                     'image_height': interface_specs['camera_resolution']['height'],
                 }],
                 remappings=[
-                    ('image_raw', 'zed_node/right/image_rect_color'),
+                    ('image_raw', 'zed_node/right/color/rect/image'),
                     ('image', 'right/image_rect')]
             ),
             'tf_publisher': ComposableNode(
@@ -113,8 +113,8 @@ class IsaacROSZedStereoRectLaunchFragment(IsaacROSLaunchFragment):
                 name='zed_node',
                 parameters=parameters,
                 remappings=[
-                    ('zed_node/left/camera_info', '/left/camera_info_rect'),
-                    ('zed_node/right/camera_info', '/right/camera_info_rect'),
+                    ('zed_node/left/color/rect/camera_info', '/left/camera_info_rect'),
+                    ('zed_node/right/color/rect/camera_info', '/right/camera_info_rect'),
                 ],
                 extra_arguments=[{'use_intra_process_comms': True}]
             )
