@@ -67,7 +67,7 @@ class IsaacROSZedMonoLaunchFragment(IsaacROSLaunchFragment):
                     'image_height': interface_specs['camera_resolution']['height'],
                 }],
                 remappings=[
-                    ('image_raw', '/zed_node/rgb_raw/image_raw_color'),
+                    ('image_raw', 'zed_node/left/color/raw/image'),
                     ('image', 'image_raw')
                 ]
             ),
@@ -80,7 +80,7 @@ class IsaacROSZedMonoLaunchFragment(IsaacROSLaunchFragment):
                     config_camera,  # Camera related parameters
                 ],
                 remappings=[
-                    ('zed_node/left/camera_info', '/camera_info'),
+                    ('zed_node/left/color/raw/camera_info', '/camera_info'),
                 ],
                 extra_arguments=[{'use_intra_process_comms': True}]
             )

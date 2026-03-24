@@ -40,6 +40,10 @@
             qos_depth: 1 # Queue size if using KEEP_LAST
             qos_reliability: 1 # '1': RELIABLE - '2': BEST_EFFORT -
             qos_durability: 2 # '1': TRANSIENT_LOCAL - '2': VOLATILE
+            publish_left_right: true # Advertise the left and right image topics that are published only if a node subscribes to them
+            publish_rgb: true # Advertise the RGB image topics that are published only if a node subscribes to them
+            publish_gray: true # Advertise the gray image topics that are published only if a node subscribes to them
+            publish_raw: true # Advertise the raw image topics that are published only if a node subscribes to them (only if 'publish_rgb' or 'publish_gray' is true)
 
         depth:
             depth_mode: 'NONE' # Matches the ZED SDK setting: 'NONE', 'PERFORMANCE', 'QUALITY', 'ULTRA', 'NEURAL' - Note: if 'NONE' all the modules that requires depth extraction are disabled by default (Pos. Tracking, Obj. Detection, Mapping, ...)
@@ -116,7 +120,7 @@
             max_range: 20.0 # [m] Defines a upper depth range for detections
             confidence_threshold: 50.0 # [DYNAMIC] - Minimum value of the detection confidence of an object [0,99]
             prediction_timeout: 0.5 # During this time [sec], the object will have OK state even if it is not detected. Set this parameter to 0 to disable SDK predictions            
-            filtering_mode: 1 # '0': NONE - '1': NMS3D - '2': NMS3D_PER_CLASS
+            filtering_mode: 'NMS3D' # Filtering mode that should be applied to raw detections: 'NONE', 'NMS3D', 'NMS3D_PER_CLASS'
             mc_people: false # [DYNAMIC] - Enable/disable the detection of persons for 'MULTI_CLASS_X' models
             mc_vehicle: true # [DYNAMIC] - Enable/disable the detection of vehicles for 'MULTI_CLASS_X' models
             mc_bag: true # [DYNAMIC] - Enable/disable the detection of bags for 'MULTI_CLASS_X' models
