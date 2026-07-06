@@ -48,17 +48,6 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
         'isaac_ros_realsense', 'IsaacROSRealSenseMonoRectDepthLaunchFragment',
         'isaac_ros_realsense_mono_rect_depth_core.launch.py'),
 
-    # Argus Camera
-    'argus_mono': IsaacROSLaunchFragmentSpec(
-        'isaac_ros_argus_camera', 'IsaacROSArgusMonoLaunchFragment',
-        'isaac_ros_argus_camera_mono_core.launch.py'),
-    'argus_stereo': IsaacROSLaunchFragmentSpec(
-        'isaac_ros_argus_camera', 'IsaacROSArgusStereoLaunchFragment',
-        'isaac_ros_argus_camera_stereo_core.launch.py'),
-    'argus_depth': IsaacROSLaunchFragmentSpec(
-        'isaac_ros_argus_camera', 'IsaacROSArgusDepthLaunchFragment',
-        'isaac_ros_argus_camera_depth_core.launch.py'),
-
     # USB Camera
     'usb_cam': IsaacROSLaunchFragmentSpec(
         'isaac_ros_usb_cam', 'IsaacROSUSBCameraLaunchFragment'),
@@ -142,6 +131,8 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
 
 
     # Isaac ROS DNN Stereo Depth
+    'dnn_stereo_decoder': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_dnn_stereo_decoder', 'IsaacROSDnnStereoDecoderLaunchFragment'),
     'ess_disparity': IsaacROSLaunchFragmentSpec(
         'isaac_ros_ess', 'IsaacROSEssLaunchFragment'),
     'foundationstereo': IsaacROSLaunchFragmentSpec(
