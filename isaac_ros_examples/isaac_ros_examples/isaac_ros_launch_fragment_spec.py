@@ -187,7 +187,8 @@ LAUNCH_FRAGMENT_SPECS: Dict[str, IsaacROSLaunchFragmentSpec] = {
         'isaac_ros_foundationpose', 'IsaacROSFoundationPoseTrackingLaunchFragment',
         'isaac_ros_foundationpose_tracking_core.launch.py'),
 
-    # Isaac ROS Visual Slam
-    'visual_slam': IsaacROSLaunchFragmentSpec(
-        'isaac_ros_visual_slam', 'IsaacROSVisualSlamLaunchFragment'),
+    # Isaac ROS cuVSLAM
+    'cuvslam': IsaacROSLaunchFragmentSpec(
+        'isaac_ros_cuvslam', 'IsaacROSCuvslamLaunchFragment',
+        'isaac_ros_visual_slam_core.launch.py'),
 }

@@ -41,7 +41,7 @@ class IsaacROSLaunchFragment():
         return {}
 
     @staticmethod
-    def get_composable_nodes(interface_specs: Dict[str, Any] = {}) -> Dict[str, ComposableNode]:
+    def get_composable_nodes(interface_specs: Dict[str, Any]) -> Dict[str, ComposableNode]:
         """
         Get the composable nodes for this fragment.
 
@@ -59,7 +59,7 @@ class IsaacROSLaunchFragment():
         return {}
 
     @staticmethod
-    def get_launch_actions(interface_specs: Dict[str, Any] = {}) -> Dict[str, Action]:
+    def get_launch_actions(interface_specs: Dict[str, Any]) -> Dict[str, Action]:
         """
         Get the launch actions for this fragment.
 
